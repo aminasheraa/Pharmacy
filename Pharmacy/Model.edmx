@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="ID" />
@@ -125,6 +125,8 @@
           <Property Name="FIO" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__Inventory__Pharm__5629CD9C">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -361,8 +363,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PharmacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -484,6 +485,8 @@
           <NavigationProperty Name="OnlineOrder" Relationship="Self.FK__OnlineOrd__UserI__5441852A" FromRole="Users" ToRole="OnlineOrder" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__4AB81AF0" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__UserID__4F7CD00D" FromRole="Users" ToRole="Supplies" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductPharmacies">
           <Key>
@@ -839,6 +842,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PharmacyModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FIO" ColumnName="FIO" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />

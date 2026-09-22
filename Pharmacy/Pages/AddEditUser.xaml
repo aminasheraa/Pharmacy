@@ -1,0 +1,34 @@
+﻿<Page x:Class="Pharmacy.Pages.AddEditUser"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pharmacy.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditUser">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Добавление/редактирование пользователя"/>
+            <TextBlock Text="ФИО: "/>
+            <TextBox x:Name="FIOBox" Height="30" Width="300" />
+            
+            <TextBlock Text="Логин: "/>
+            <TextBox x:Name="LoginBox" Height="30" Width="300" />
+
+            <TextBlock Text="Пароль: "/>
+            <TextBox x:Name="PasswordBox" Height="30" Width="300" />
+
+            <TextBlock Text="Дата рождения: " />
+            <DatePicker x:Name="BirthDP" Height="30" Width="300" />
+            
+            <TextBlock Text="Роль: "/>
+            <ComboBox x:Name="RoleCB" Height="30" Width="300" >
+                
+            </ComboBox>
+
+
+        </StackPanel>
+    </Grid>
+</Page>
