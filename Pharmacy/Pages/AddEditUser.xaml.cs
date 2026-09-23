@@ -25,19 +25,39 @@ namespace Pharmacy.Pages
         {
             InitializeComponent();
             currentuser = user;
+            RoleCB.ItemsSource = Core.Context.Roles.ToList();
             if (user != null)
             {
+                TitleTb.Text = "Редактирование пользователя";
                 FIOBox.Text = currentuser.FIO;
                 LoginBox.Text = currentuser.Login;
                 PasswordBox.Text = currentuser.Password;
                 BirthDP.Text = currentuser.DateOfBirth.ToString();
-                /*                RoleCB.SelectedItem = user.Roles.Name();
-                */
+                RoleCB.SelectedIndex = currentuser.RoleID + 1;
+                
             }
         }
 
-        public void LoadDetails()
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (FIOBox.Text == null || LoginBox.Text == null || PasswordBox == null || BirthDP == null || RoleCB.SelectedItem == null)
+            {
+                MessageBox.Show("Заполните все поля данными");
+                return;
+            }
+
+            currentuser.FIO = FIOBox.Text;
+            currentuser.Login = LoginBox.Text;
+            currentuser.Password = PasswordBox.Text;
+            currentuser.DateOfBirth = (DateTime)BirthDP.SelectedDate;
+            currentuser.RoleID = RoleCB.SelectedIndex + 1;
+
+            if (currentuser.ID == 0)
+                Core.Context.Users.Add(currentuser);
+            Core.Context.SaveChanges();
+            MessageBox.Show("Успешно добавлен/сохранён пользователь");
+            NavigationService.GoBack();
+
             
         }
     }

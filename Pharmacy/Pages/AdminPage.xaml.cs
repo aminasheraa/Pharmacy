@@ -44,5 +44,18 @@ namespace Pharmacy.Pages
             var user = (sender as Button).DataContext as Users;
             NavigationService.Navigate(new AddEditUser(user));
         }
+
+        private void DeleteUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var user = (sender as Button).DataContext as Users;
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого пользователя?", "Подтверждение удаления",
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Core.Context.Users.Remove(user);
+            }
+            return;
+        }
     }
 }

@@ -31,7 +31,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <Button x:Name="EditUserBtn" Content="✎" Height="20" Width="20" Margin="5" Click="EditUserBtn_Click"/>
-                            <Button x:Name="DeleteUserBtn" Content="🗑️" Height="20" Width="20" Margin="5"/>
+                            <Button x:Name="DeleteUserBtn" Content="🗑️" Height="20" Width="20" Margin="5" Click="DeleteUserBtn_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
