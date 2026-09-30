@@ -35,7 +35,6 @@ namespace Pharmacy.Pages
             var user = Core.Context.Users.FirstOrDefault(u => u.Login == LoginTB.Text && u.Password == PB.Password);
             if (user != null)
             {
-                MessageBox.Show("Успешная авторизация");
                 Core.CurrentUser = user;
                 
                 if (user.RoleID == 1)

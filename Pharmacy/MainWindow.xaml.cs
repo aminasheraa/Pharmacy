@@ -20,9 +20,23 @@ namespace Pharmacy
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isFirstTheme = false;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            isFirstTheme = !isFirstTheme;
+
+            string themePath = isFirstTheme ? "/Dictionaries/Dictionary2.xaml" : "/Dictionaries/Dictionary1.xaml";
+
+            var uri = new Uri(themePath, UriKind.Relative);
+            ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }
     }
 }

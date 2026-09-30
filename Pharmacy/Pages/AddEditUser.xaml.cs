@@ -33,7 +33,7 @@ namespace Pharmacy.Pages
                 LoginBox.Text = currentuser.Login;
                 PasswordBox.Text = currentuser.Password;
                 BirthDP.Text = currentuser.DateOfBirth.ToString();
-                RoleCB.SelectedIndex = currentuser.RoleID + 1;
+                RoleCB.SelectedItem = currentuser.Roles;
                 
             }
         }

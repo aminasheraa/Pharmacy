@@ -6,28 +6,31 @@
       xmlns:local="clr-namespace:Pharmacy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddEditUser">
+      Title="AddEditUser" Style="{DynamicResource PageBackground}">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="TitleTb" Text="Добавление/редактирование пользователя"/>
-            <TextBlock Text="ФИО: "/>
-            <TextBox x:Name="FIOBox" Height="30" Width="300" />
-            
-            <TextBlock Text="Логин: "/>
-            <TextBox x:Name="LoginBox" Height="30" Width="300" />
+        <Border Style="{DynamicResource MainBorder}" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="5">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="TitleTb" Text="Добавление/редактирование пользователя"/>
+                <TextBlock Text="ФИО: "/>
+                <TextBox x:Name="FIOBox" Height="30" Width="300" />
 
-            <TextBlock Text="Пароль: "/>
-            <TextBox x:Name="PasswordBox" Height="30" Width="300" />
+                <TextBlock Text="Логин: "/>
+                <TextBox x:Name="LoginBox" Height="30" Width="300" />
 
-            <TextBlock Text="Дата рождения: " />
-            <DatePicker x:Name="BirthDP" Height="30" Width="300" />
-            
-            <TextBlock Text="Роль: "/>
-            <ComboBox x:Name="RoleCB" Height="30" Width="300" DisplayMemberPath="Name">
-            </ComboBox>
-            <Button x:Name="SaveBtn" Content="Сохранить" Height="30" Width="200" Margin="10" Click="SaveBtn_Click"/>
+                <TextBlock Text="Пароль: "/>
+                <TextBox x:Name="PasswordBox" Height="30" Width="300" />
 
-        </StackPanel>
+                <TextBlock Text="Дата рождения: " />
+                <DatePicker x:Name="BirthDP" Height="50" Width="300" />
+
+                <TextBlock Text="Роль: "/>
+                <ComboBox x:Name="RoleCB" Height="30" Width="300" DisplayMemberPath="Name">
+                </ComboBox>
+                <Button x:Name="SaveBtn" Content="Сохранить" Height="30" Width="200" Margin="10" Click="SaveBtn_Click"/>
+
+            </StackPanel>
+        </Border>
+        
     </Grid>
 </Page>

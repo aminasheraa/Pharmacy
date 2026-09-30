@@ -25,9 +25,10 @@ namespace Pharmacy.Pages
         public AdminPage(Users user)
         {
             InitializeComponent();
+            LoadUsers();
         }
 
-        private void UsersLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void LoadUsers()
         {
             var users = Core.Context.Users.Include("Roles").Where(u => u.RoleID == 1 || u.RoleID == 3).ToList();
             UsersLB.ItemsSource = users;
@@ -35,7 +36,7 @@ namespace Pharmacy.Pages
 
         private void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(null);
+            NavigationService.Navigate(new AddEditUser(null));
 
         }
 

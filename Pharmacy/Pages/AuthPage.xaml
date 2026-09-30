@@ -6,17 +6,18 @@
       xmlns:local="clr-namespace:Pharmacy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AuthPage">
+      Title="AuthPage" Style="{DynamicResource PageBackground}">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Авторизация"/>
-            <TextBlock Text="Логин: " Margin="5"/>
-            <TextBox x:Name="LoginTB" Height="30" Width="120" Margin="5"/>
-            <TextBlock Text="Пароль: " Margin="5"/>
-            <PasswordBox x:Name="PB" Height="30" Width="120" Margin="5"/>
-            <Button x:Name="AuthBtn" Content="Войти" Height="30" Width="120" Click="AuthBtn_Click"/>
-        </StackPanel>
-        
+        <Border Style="{DynamicResource MainBorder}" Width="210" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Авторизация" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                <TextBlock Text="Логин: " Margin="5"/>
+                <TextBox x:Name="LoginTB" Height="30" Width="150" Margin="5"/>
+                <TextBlock Text="Пароль: " Margin="5"/>
+                <PasswordBox x:Name="PB" Height="30" Width="150" Margin="5"/>
+                <Button x:Name="AuthBtn" Content="Войти" Height="30" Width="150" Margin="5,15,5,5" Click="AuthBtn_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Pharmacy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminPage">
+      Title="AdminPage" Style="{DynamicResource PageBackground}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,26 +14,29 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
-            <TextBlock Text="Пользователи" FontSize="20" Margin="5" FontWeight="Bold"/>
-            <Button x:Name="AddUserBtn" Content="Добавить пользователя" Height="30" Width="200"  Click="AddUserBtn_Click" Margin="50,0,0,0"/>
+            <TextBlock Text="Пользователи" Style="{StaticResource HeaderText}" Margin="5" FontWeight="Bold"/>
+            <Button x:Name="AddUserBtn" Content="Добавить пользователя"  Click="AddUserBtn_Click" Margin="50,0,0,0"/>
         </StackPanel>
 
-        <ListBox x:Name="UsersLB" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="UsersLB_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5}" >
+        <ListBox x:Name="UsersLB" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock x:Name="UserFIO" Text="{Binding FIO, StringFormat=Пользователь: {0}}" FontWeight="Bold" Margin="5"/>
-                            <TextBlock x:Name="UserLogin" Text="{Binding Login, StringFormat=Логин: {0}}" Margin="5"/>
-                            <TextBlock x:Name="UserPassword" Text="{Binding Password, StringFormat=Пароль: {0}}" Margin="5"/>
-                            <TextBlock x:Name="Role" Text="{Binding Roles.Name, StringFormat=Роль: {0}}" Margin="5"/>
-                            <TextBlock x:Name="UserDateOfBirth" Text="{Binding DateOfBirth, StringFormat=Дата рождения: {0:dd.MM.yyyy}}" Margin="5"/>
+                    <Border Style="{DynamicResource MainBorder}" Width="600" HorizontalAlignment="Center"  VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Name="UserFIO" Text="{Binding FIO, StringFormat=Пользователь: {0}}" FontWeight="Bold" Margin="5"/>
+                                <TextBlock x:Name="UserLogin" Text="{Binding Login, StringFormat=Логин: {0}}" Margin="5"/>
+                                <TextBlock x:Name="UserPassword" Text="{Binding Password, StringFormat=Пароль: {0}}" Margin="5"/>
+                                <TextBlock x:Name="Role" Text="{Binding Roles.Name, StringFormat=Роль: {0}}" Margin="5"/>
+                                <TextBlock x:Name="UserDateOfBirth" Text="{Binding DateOfBirth, StringFormat=Дата рождения: {0:dd.MM.yyyy}}" Margin="5"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button x:Name="EditUserBtn" Content="✎" Height="20" Width="20" Margin="5" Click="EditUserBtn_Click"/>
+                                <Button x:Name="DeleteUserBtn" Content="🗑️" Height="20" Width="20" Margin="5" Click="DeleteUserBtn_Click"/>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="10">
-                            <Button x:Name="EditUserBtn" Content="✎" Height="20" Width="20" Margin="5" Click="EditUserBtn_Click"/>
-                            <Button x:Name="DeleteUserBtn" Content="🗑️" Height="20" Width="20" Margin="5" Click="DeleteUserBtn_Click"/>
-                        </StackPanel>
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
