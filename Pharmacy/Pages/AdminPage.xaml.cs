@@ -58,5 +58,18 @@ namespace Pharmacy.Pages
             }
             return;
         }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены, что хотите выйти из аккаунта?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Core.CurrentUser = null;
+
+                NavigationService.Navigate(new AuthPage());
+
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Pharmacy.Pages
         public ProductsPage()
         {
             InitializeComponent();
-
+            CategoryCB.SelectedIndex = 0;
             ProductsLB.ItemsSource = Core.Context.Products.ToList();
             UpdateFilters();
         }
@@ -53,9 +53,7 @@ namespace Pharmacy.Pages
 
             if (!string.IsNullOrEmpty(search))
             {
-                filtered = filtered
-                    .Where(p => p.Name.ToLower().Contains(search))
-                    .ToList();
+                filtered = filtered.Where(p => p.Name.ToLower().Contains(search)).ToList();
             }
 
             if (CategoryCB.SelectedIndex > 0)
@@ -65,9 +63,7 @@ namespace Pharmacy.Pages
 
                 if (!string.IsNullOrEmpty(selectedCategory))
                 {
-                    filtered = filtered
-                        .Where(p => p.Category.Any(c => c.Name == selectedCategory))
-                        .ToList();
+                    filtered = filtered.Where(p => p.Category.Any(c => c.Name == selectedCategory)).ToList();
                 }
             }
 

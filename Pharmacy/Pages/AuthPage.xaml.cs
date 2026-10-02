@@ -140,11 +140,6 @@ namespace Pharmacy.Pages
             }
         }
 
-        private void CancelCaptcha_Click(object sender, RoutedEventArgs e)
-        {
-            HideCaptcha();
-        }
-
         private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
