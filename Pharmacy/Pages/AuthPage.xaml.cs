@@ -59,11 +59,11 @@ namespace Pharmacy.Pages
                 }
                 else if (user.RoleID == 2)
                 {
-                    NavigationService.Navigate(new AdminPage(user));
+                    NavigationService.Navigate(new AdminPage());
                 }
                 else if (user.RoleID == 3)
                 {
-
+                    NavigationService.Navigate(new ManagerPage());
                 }
             }
             else

@@ -22,7 +22,7 @@ namespace Pharmacy.Pages
     /// </summary>
     public partial class AdminPage : Page
     {
-        public AdminPage(Users user)
+        public AdminPage()
         {
             InitializeComponent();
             LoadUsers();
