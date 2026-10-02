@@ -7,31 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Supplies
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Supplies()
         {
-            this.OnlineOrder = new HashSet<OnlineOrder>();
-            this.Supplies = new HashSet<Supplies>();
+            this.ProductsSupply = new HashSet<ProductsSupply>();
         }
     
         public int ID { get; set; }
-        public string FIO { get; set; }
-        public int RoleID { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
-        public string Password { get; set; }
-        public string Login { get; set; }
+        public System.DateTime Date { get; set; }
+        public int UserID { get; set; }
+        public decimal Price { get; set; }
+        public int StoragesID { get; set; }
+        public int PharmaciesID { get; set; }
     
+        public virtual Pharmacies Pharmacies { get; set; }
+        public virtual Storages Storages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OnlineOrder> OnlineOrder { get; set; }
-        public virtual Roles Roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Supplies> Supplies { get; set; }
+        public virtual ICollection<ProductsSupply> ProductsSupply { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

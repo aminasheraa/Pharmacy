@@ -5,11 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="PharmacyID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
@@ -19,7 +26,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
@@ -29,8 +36,18 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Pharmacy.dbo.ProductCategory" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Pharmacy.dbo.ProductPharmacies" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -48,9 +65,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "Pharmacy.dbo.ProductsSupply" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -68,14 +86,14 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="SpecificallyProducts">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ExpirationDate" Type="date" Nullable="false" />
           <Property Name="ProductsID" Type="int" Nullable="false" />
           <Property Name="PharmaciesID" Type="int" Nullable="false" />
@@ -86,21 +104,21 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Storages">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Supplies">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
@@ -117,16 +135,26 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Pharmacy.dbo.UserPharmacy" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="UserPharmacy">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="PharmacyID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PharmacyID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FIO" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK__Inventory__Pharm__5629CD9C">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -284,7 +312,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_Products1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPharmacy_Pharmacies">
+          <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+          <End Role="UserPharmacy" Type="Self.UserPharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pharmacies">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPharmacy">
+              <PropertyRef Name="PharmacyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPharmacy_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserPharmacy" Type="Self.UserPharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPharmacy">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище PharmacyModelContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
@@ -296,6 +373,12 @@
           <EntitySet Name="Supplies" EntityType="Self.Supplies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProductCategory].[ProductID] AS [ProductID], 
+    [ProductCategory].[CategoryID] AS [CategoryID]
+    FROM [dbo].[ProductCategory] AS [ProductCategory]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ProductPharmacies" EntityType="Self.ProductPharmacies" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ProductPharmacies].[ProductID] AS [ProductID], 
@@ -309,6 +392,12 @@
     [ProductsSupply].[SupplyID] AS [SupplyID], 
     [ProductsSupply].[Count] AS [Count]
     FROM [dbo].[ProductsSupply] AS [ProductsSupply]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserPharmacy" EntityType="Self.UserPharmacy" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserPharmacy].[UserID] AS [UserID], 
+    [UserPharmacy].[PharmacyID] AS [PharmacyID]
+    FROM [dbo].[UserPharmacy] AS [UserPharmacy]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Inventory__Pharm__5629CD9C" Association="Self.FK__Inventory__Pharm__5629CD9C">
             <End Role="Pharmacies" EntitySet="Pharmacies" />
@@ -362,16 +451,40 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Products1" Association="Self.FK_ProductCategory_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPharmacy_Pharmacies" Association="Self.FK_UserPharmacy_Pharmacies">
+            <End Role="Pharmacies" EntitySet="Pharmacies" />
+            <End Role="UserPharmacy" EntitySet="UserPharmacy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPharmacy_Users" Association="Self.FK_UserPharmacy_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserPharmacy" EntitySet="UserPharmacy" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PharmacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.ProductCategory" FromRole="Category" ToRole="Products" />
+        </EntityType>
         <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PharmacyID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
@@ -382,7 +495,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
@@ -395,28 +508,31 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Inventory" Relationship="Self.FK__Inventory__Pharm__5629CD9C" FromRole="Pharmacies" ToRole="Inventory" />
           <NavigationProperty Name="ProductPharmacies" Relationship="Self.FK__ProductPh__Pharm__534D60F1" FromRole="Pharmacies" ToRole="ProductPharmacies" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__Pharma__4BAC3F29" FromRole="Pharmacies" ToRole="Supplies" />
+          <NavigationProperty Name="Users" Relationship="PharmacyModel.UserPharmacy" FromRole="Pharmacies" ToRole="Users" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ProductPharmacies" Relationship="Self.FK__ProductPh__Produ__52593CB8" FromRole="Products" ToRole="ProductPharmacies" />
           <NavigationProperty Name="ProductsSupply" Relationship="Self.FK__ProductsS__Produ__5165187F" FromRole="Products" ToRole="ProductsSupply" />
           <NavigationProperty Name="SpecificallyProducts" Relationship="Self.FK__Specifica__Produ__4D94879B" FromRole="Products" ToRole="SpecificallyProducts" />
+          <NavigationProperty Name="Category" Relationship="Self.ProductCategory" FromRole="Products" ToRole="Category" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleID__4AB81AF0" FromRole="Roles" ToRole="Users" />
         </EntityType>
@@ -424,7 +540,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ProductsID" Type="Int32" Nullable="false" />
           <Property Name="PharmaciesID" Type="Int32" Nullable="false" />
@@ -437,7 +553,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="OnlineOrder" Relationship="Self.FK__OnlineOrd__Statu__5535A963" FromRole="Status" ToRole="OnlineOrder" />
         </EntityType>
@@ -445,7 +561,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__Storag__4CA06362" FromRole="Storages" ToRole="Supplies" />
         </EntityType>
@@ -453,7 +569,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
@@ -478,15 +594,16 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FIO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="OnlineOrder" Relationship="Self.FK__OnlineOrd__UserI__5441852A" FromRole="Users" ToRole="OnlineOrder" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__4AB81AF0" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__UserID__4F7CD00D" FromRole="Users" ToRole="Supplies" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pharmacies" Relationship="PharmacyModel.UserPharmacy" FromRole="Users" ToRole="Pharmacies" />
         </EntityType>
         <EntityType Name="ProductPharmacies">
           <Key>
@@ -668,7 +785,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ProductCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="PharmacyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" />
           <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" />
@@ -734,13 +856,33 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Supplies" EntitySet="Supplies" />
           </AssociationSet>
+          <AssociationSet Name="ProductCategory" Association="Self.ProductCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="UserPharmacy" Association="PharmacyModel.UserPharmacy">
+            <End Role="Pharmacies" EntitySet="Pharmacies" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="UserPharmacy">
+          <End Type="PharmacyModel.Pharmacies" Role="Pharmacies" Multiplicity="*" />
+          <End Type="PharmacyModel.Users" Role="Users" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище PharmacyModelContainer" CdmEntityContainer="PharmacyEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="PharmacyModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Inventory">
             <EntityTypeMapping TypeName="PharmacyModel.Inventory">
               <MappingFragment StoreEntitySet="Inventory">
@@ -777,6 +919,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -842,12 +985,12 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PharmacyModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FIO" ColumnName="FIO" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -869,6 +1012,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="ProductCategory" TypeName="PharmacyModel.ProductCategory" StoreEntitySet="ProductCategory">
+            <EndProperty Name="Category">
+              <ScalarProperty Name="ID" ColumnName="CategoryID" />
+            </EndProperty>
+            <EndProperty Name="Products">
+              <ScalarProperty Name="ID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserPharmacy" TypeName="PharmacyModel.UserPharmacy" StoreEntitySet="UserPharmacy">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+            <EndProperty Name="Pharmacies">
+              <ScalarProperty Name="ID" ColumnName="PharmacyID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

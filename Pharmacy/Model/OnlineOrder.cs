@@ -7,29 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Products
+    public partial class OnlineOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Products()
+        public OnlineOrder()
         {
-            this.ProductPharmacies = new HashSet<ProductPharmacies>();
-            this.ProductsSupply = new HashSet<ProductsSupply>();
             this.SpecificallyProducts = new HashSet<SpecificallyProducts>();
         }
     
         public int ID { get; set; }
-        public string Name { get; set; }
+        public System.DateTime Date { get; set; }
+        public int UserID { get; set; }
         public decimal Price { get; set; }
+        public int StatusID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductPharmacies> ProductPharmacies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductsSupply> ProductsSupply { get; set; }
+        public virtual Status Status { get; set; }
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecificallyProducts> SpecificallyProducts { get; set; }
     }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace Pharmacy
             this.Inventory = new HashSet<Inventory>();
             this.ProductPharmacies = new HashSet<ProductPharmacies>();
             this.Supplies = new HashSet<Supplies>();
+            this.Users = new HashSet<Users>();
         }
     
         public int ID { get; set; }
@@ -31,5 +32,7 @@ namespace Pharmacy
         public virtual ICollection<ProductPharmacies> ProductPharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supplies> Supplies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

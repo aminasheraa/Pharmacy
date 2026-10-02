@@ -7,21 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SpecificallyProducts
+    public partial class Category
     {
-        public int ID { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
-        public int ProductsID { get; set; }
-        public int PharmaciesID { get; set; }
-        public Nullable<int> OnlineOrderID { get; set; }
-        public bool InStock { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Category()
+        {
+            this.Products = new HashSet<Products>();
+        }
     
-        public virtual OnlineOrder OnlineOrder { get; set; }
-        public virtual Products Products { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Products> Products { get; set; }
     }
 }

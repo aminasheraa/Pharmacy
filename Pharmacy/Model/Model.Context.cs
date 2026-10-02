@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Data.Entity;
@@ -25,6 +25,7 @@ namespace Pharmacy
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<OnlineOrder> OnlineOrder { get; set; }
         public virtual DbSet<Pharmacies> Pharmacies { get; set; }

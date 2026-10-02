@@ -7,30 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplies
+    public partial class Products
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Supplies()
+        public Products()
         {
+            this.ProductPharmacies = new HashSet<ProductPharmacies>();
             this.ProductsSupply = new HashSet<ProductsSupply>();
+            this.SpecificallyProducts = new HashSet<SpecificallyProducts>();
+            this.Category = new HashSet<Category>();
         }
     
         public int ID { get; set; }
-        public System.DateTime Date { get; set; }
-        public int UserID { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
-        public int StoragesID { get; set; }
-        public int PharmaciesID { get; set; }
+        public string Image { get; set; }
     
-        public virtual Pharmacies Pharmacies { get; set; }
-        public virtual Storages Storages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductPharmacies> ProductPharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsSupply> ProductsSupply { get; set; }
-        public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SpecificallyProducts> SpecificallyProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Category> Category { get; set; }
     }
 }

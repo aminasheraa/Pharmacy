@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Pharmacy.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +21,7 @@ namespace Pharmacy.Pages
     /// <summary>
     /// Логика взаимодействия для AddEditUser.xaml
     /// </summary>
+
     public partial class AddEditUser : Page
     {
         private Users currentuser;
@@ -34,31 +38,58 @@ namespace Pharmacy.Pages
                 PasswordBox.Text = currentuser.Password;
                 BirthDP.Text = currentuser.DateOfBirth.ToString();
                 RoleCB.SelectedItem = currentuser.Roles;
-                
+
             }
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (FIOBox.Text == null || LoginBox.Text == null || PasswordBox == null || BirthDP == null || RoleCB.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(FIOBox.Text) || string.IsNullOrWhiteSpace(LoginBox.Text) || string.IsNullOrWhiteSpace(PasswordBox.Text) || BirthDP.SelectedDate == null || RoleCB.SelectedItem == null)
             {
                 MessageBox.Show("Заполните все поля данными");
                 return;
             }
 
-            currentuser.FIO = FIOBox.Text;
-            currentuser.Login = LoginBox.Text;
-            currentuser.Password = PasswordBox.Text;
-            currentuser.DateOfBirth = (DateTime)BirthDP.SelectedDate;
-            currentuser.RoleID = RoleCB.SelectedIndex + 1;
+            var selectedRole = RoleCB.SelectedItem as Roles; 
 
-            if (currentuser.ID == 0)
-                Core.Context.Users.Add(currentuser);
+            if (currentuser != null)
+            {
+                currentuser.FIO = FIOBox.Text;
+                currentuser.Login = LoginBox.Text;
+                currentuser.Password = GetHash(PasswordBox.Text);
+                currentuser.DateOfBirth = BirthDP.SelectedDate.Value;
+                currentuser.RoleID = selectedRole.ID; 
+            }
+            else
+            {
+                Users newUser = new Users
+                {
+                    FIO = FIOBox.Text,
+                    Login = LoginBox.Text,
+                    Password = GetHash(PasswordBox.Text),
+                    DateOfBirth = BirthDP.SelectedDate.Value,
+                    RoleID = selectedRole.ID 
+                };
+
+                Core.Context.Users.Add(newUser);
+            }
+
             Core.Context.SaveChanges();
+
             MessageBox.Show("Успешно добавлен/сохранён пользователь");
             NavigationService.GoBack();
-
-            
         }
+        public static string GetHash(String password)
+        {
+            using (var hash = SHA1.Create())
+            {
+                return
+               string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(password)).Select(x =>
+               x.ToString("X2")));
+            }
+        }
+
     }
 }
+
+  

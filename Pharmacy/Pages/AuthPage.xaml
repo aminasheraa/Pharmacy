@@ -9,14 +9,25 @@
       Title="AuthPage" Style="{DynamicResource PageBackground}">
 
     <Grid>
-        <Border Style="{DynamicResource MainBorder}" Width="210" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
+        <Border Style="{DynamicResource MainBorder}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
             <StackPanel>
                 <TextBlock Text="Авторизация" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
-                <TextBlock Text="Логин: " Margin="5"/>
-                <TextBox x:Name="LoginTB" Height="30" Width="150" Margin="5"/>
-                <TextBlock Text="Пароль: " Margin="5"/>
-                <PasswordBox x:Name="PB" Height="30" Width="150" Margin="5"/>
-                <Button x:Name="AuthBtn" Content="Войти" Height="30" Width="150" Margin="5,15,5,5" Click="AuthBtn_Click"/>
+                <StackPanel x:Name="AuthPanel">
+                    <TextBlock x:Name="LabelLogin" Text="Логин:" Margin="5,5,5,2"/>
+                    <TextBox x:Name="LoginTB" Height="30" Margin="5" Padding="5"/>
+                    <TextBlock x:Name="LabelPass" Text="Пароль:" Margin="5,5,5,2"/>
+                    <PasswordBox x:Name="PB" Height="30" Margin="5" Padding="5"/>
+                    <Button x:Name="AuthBtn" Content="Войти" Height="30" Margin="5,15,5,5" Click="AuthBtn_Click"/>
+                </StackPanel>
+                <StackPanel x:Name="CaptchaPanel" Visibility="Collapsed" Margin="5,10,5,0">
+                    <TextBlock Text="Введите символы с изображения:" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Width="190" Height="55" HorizontalAlignment="Center" Margin="0,0,0,10" Background="White">
+                        <TextBox x:Name="captcha" IsReadOnly="True" Focusable="False" Background="Transparent" BorderThickness="0" Foreground="Red" FontSize="22" FontWeight="Bold" FontStyle="Italic" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TextAlignment="Center" CommandManager.PreviewExecuted="textBox_PreviewExecuted"/>
+                    </Border>
+                    <TextBox x:Name="captchaInput" Height="32" Width="190" HorizontalAlignment="Center" Margin="0,0,0,10" HorizontalContentAlignment="Center" />
+                    <Button x:Name="submitCaptcha" Content="Подтвердить" Height="32" Width="130" HorizontalAlignment="Center" Click="submitCaptcha_Click"/>
+                    <Button Content="Назад" Height="28" Width="100" HorizontalAlignment="Center" Margin="0,8,0,0" Click="CancelCaptcha_Click"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

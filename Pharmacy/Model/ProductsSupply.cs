@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pharmacy
+namespace Pharmacy.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Inventory
+    public partial class ProductsSupply
     {
-        public int ID { get; set; }
-        public System.DateTime Date { get; set; }
-        public int PharmacyID { get; set; }
-        public int Quantity { get; set; }
-        public decimal Sum { get; set; }
+        public int ProductID { get; set; }
+        public int SupplyID { get; set; }
+        public int Count { get; set; }
     
-        public virtual Pharmacies Pharmacies { get; set; }
+        public virtual Products Products { get; set; }
+        public virtual Supplies Supplies { get; set; }
     }
 }
