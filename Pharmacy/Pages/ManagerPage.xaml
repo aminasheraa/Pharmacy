@@ -19,7 +19,7 @@
 
         </StackPanel>
 
-        <ListBox x:Name="PharmaciesLB" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" d:ItemsSource="{d:SampleData ItemCount=5}" >
+        <ListBox x:Name="PharmaciesLB" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="PharmaciesLB_MouseDoubleClick" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{DynamicResource MainBorder}" Width="710" HorizontalAlignment="Center"  VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
@@ -28,11 +28,7 @@
                             <StackPanel Orientation="Vertical">
                                 <TextBlock x:Name="PharmacyID" Text="{Binding ID, StringFormat=Аптека № {0}}" FontWeight="Bold" Margin="5" ToolTip="ФИО пользователя"/>
                                 <TextBlock x:Name="Address" Text="{Binding Address, StringFormat=Адрес: {0}}" Margin="5" ToolTip="Логин пользователя" FontSize="14"/>
-                                
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <Button x:Name="OrderBtn" Content="Заказать поставку" Width="160" Margin="5" Click="OrderBtn_Click"  ToolTip="Заказ поставки товаров в аптеку"/>
-                                <Button x:Name="InventoryBtn" Content="Инвентаризация" Margin="5"   Width="160"  Click="InventoryBtn_Click"  ToolTip="Провести инвентаризацию аптеки"/>
+
                             </StackPanel>
                         </StackPanel>
                     </Border>

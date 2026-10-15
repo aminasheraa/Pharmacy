@@ -57,5 +57,11 @@ namespace Pharmacy.Pages
 
             }
         }
+
+        private void PharmaciesLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new PharmacyPage());
+        }
+
     }
 }

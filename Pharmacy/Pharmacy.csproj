@@ -133,6 +133,9 @@
     <Compile Include="Pages\ManagerPage.xaml.cs">
       <DependentUpon>ManagerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PharmacyPage.xaml.cs">
+      <DependentUpon>PharmacyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProductsPage.xaml.cs">
       <DependentUpon>ProductsPage.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PharmacyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
