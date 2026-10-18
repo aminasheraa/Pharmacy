@@ -17,6 +17,7 @@ namespace Pharmacy.Model
         public int ProductID { get; set; }
         public int PharmacyID { get; set; }
         public int Count { get; set; }
+        public int ID { get; set; }
     
         public virtual Pharmacies Pharmacies { get; set; }
         public virtual Products Products { get; set; }

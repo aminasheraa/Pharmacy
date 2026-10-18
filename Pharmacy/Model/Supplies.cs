@@ -28,9 +28,9 @@ namespace Pharmacy.Model
         public int PharmaciesID { get; set; }
     
         public virtual Pharmacies Pharmacies { get; set; }
-        public virtual Storages Storages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsSupply> ProductsSupply { get; set; }
+        public virtual Storages Storages { get; set; }
         public virtual Users Users { get; set; }
     }
 }

@@ -1,0 +1,85 @@
+﻿<Page x:Class="Pharmacy.Pages.OrderSupplyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pharmacy.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrderSupplyPage" Style="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Оформление поставки" Style="{StaticResource HeaderText}" Margin="10,5,0,15"/>
+
+            <Border Grid.Row="1" Style="{StaticResource MainBorder}" Margin="5" Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Склад:" Margin="5"/>
+                    <ComboBox x:Name="StorageCB" Grid.Row="1" Grid.Column="0" Margin="5" DisplayMemberPath="Address" SelectedValuePath="ID"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Товар:" Margin="5"/>
+                    <ComboBox x:Name="ProductCB" Grid.Row="1" Grid.Column="1" Margin="5" DisplayMemberPath="Name" SelectedValuePath="ID"/>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,15,5,0">
+                        <TextBlock Text="Количество:" VerticalAlignment="Center" Margin="5"/>
+                        <TextBox x:Name="CountTB" Width="100" Height="35" Text="1" Margin="5" VerticalContentAlignment="Center"/>
+                        <Button x:Name="AddProductBtn" Content="Добавить товар" Width="180" Margin="5" Click="AddProduct_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <DataGrid x:Name="SupplyDG" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="0,0,0,10"
+             Style="{DynamicResource MainDataGridStyle}"
+             ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}"
+             RowStyle="{DynamicResource DataGridRowStyle}"
+             CellStyle="{DynamicResource DataGridCellStyle}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название товара" Binding="{Binding Products.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Цена за единицу" Binding="{Binding Products.Price, StringFormat={}{0} руб.}" Width="150"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Count}" Width="120"/>
+                    <DataGridTemplateColumn Header="Сумма" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Products.Price}" Loaded="ProductSum_Loaded" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="3" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="DeleteBtn" Content="Удалить позицию" Width="180" Margin="5" Click="DeleteBtn_Click"/>
+                    <Button x:Name="BackBtn" Content="Назад" Width="120" Margin="5" Click="BackBtn_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Итого:" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock x:Name="TotalTB" Text="0 руб." FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                    <Button x:Name="SaveSupplyBtn" Content="Оформить поставку" Width="210" Margin="5" Click="SaveSupplyBtn_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

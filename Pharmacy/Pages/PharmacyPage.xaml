@@ -12,40 +12,29 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="377*"/>
-                <RowDefinition Height="73*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Наличие товаров в аптеке: " Style="{StaticResource HeaderText}"  HorizontalAlignment="Left" Margin="70, 10, 0, 0"/>
+            <TextBlock Text="Наличие товаров в аптеке: " Style="{StaticResource HeaderText}"  HorizontalAlignment="Left" Margin="70, 20, 0, 0"/>
             <DataGrid x:Name="DataGridProducts" Width="650" Height="250"
-                      Style="{StaticResource MainDataGridStyle}"
-                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
-                      RowStyle="{StaticResource DataGridRowStyle}"
-                      CellStyle="{StaticResource DataGridCellStyle}"
+                      Style="{DynamicResource MainDataGridStyle}"
+                      ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}"
+                      RowStyle="{DynamicResource DataGridRowStyle}"
+                      CellStyle="{DynamicResource DataGridCellStyle}"
                       ItemsSource="{Binding}">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название товара"
-                                        Binding="{Binding Products.Name}"
-                                        Width="*"/>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название товара" Binding="{Binding Products.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding Products.Price, StringFormat={}{0} руб.}" Width="120"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Count}" Width="120"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding TotalSum, StringFormat={}{0} руб.}" Width="150"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-                        <DataGridTextColumn Header="Цена"
-                                        Binding="{Binding Products.Price, StringFormat={}{0:F2} руб.}"
-                                        Width="120"/>
-
-                        <DataGridTextColumn Header="Количество"
-                                        Binding="{Binding Count}"
-                                        Width="120"/>
-
-                        <DataGridTextColumn Header="Сумма"
-                                        Binding="{Binding TotalSum, StringFormat={}{0:F2} руб.}"
-                                        Width="150"/>
-                    </DataGrid.Columns>
-
-                </DataGrid>
-            
-                <Button Grid.Row="1" x:Name="ButtonAdd" ToolTip="Добавить данные"
-    Content="Добавить" HorizontalAlignment="Left" Click="ButtonAdd_Click"/>
-                <Button Grid.Row="1" x:Name="ButtonDel" ToolTip="Удалить данные"
-    Content="Удалить" HorizontalAlignment="Right" Click="ButtonDel_Click"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,20">
+                <Button x:Name="BackBtn" Content="Назад" Width="120" Click="BackBtn_Click"/>
+                <Button x:Name="SupplyBtn" Content="Заказать поставку" ToolTip="Оформить заказ на поставку товаров" Click="ButtonSupply_Click" Margin="5" Width="200"/>
+                <Button x:Name="InventoryBtn" Content="Провести инвентаризацию" ToolTip="Проверить фактические остатки товаров" Margin="5" Width="230" Click="InventoryBtn_Click"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

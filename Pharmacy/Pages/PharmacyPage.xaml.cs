@@ -56,14 +56,20 @@ namespace Pharmacy.Pages
             DataGridProducts.ItemsSource = products;
         }
 
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+
+        private void ButtonSupply_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new OrderSupplyPage());
+        }
+
+        private void InventoryBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void ButtonDel_Click(object sender, RoutedEventArgs e)
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
     }
 }
