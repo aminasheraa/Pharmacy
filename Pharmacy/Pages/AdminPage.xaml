@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Pharmacy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminPage" Style="{DynamicResource PageBackground}">
+      Title="AdminPage" Style="{DynamicResource PageBackground}" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
         <ListBox x:Name="UsersLB" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{DynamicResource MainBorder}" Width="600" HorizontalAlignment="Center"  VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <Border Style="{DynamicResource MainBorder}" Width="700" HorizontalAlignment="Center"  VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="20">
 
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Vertical">

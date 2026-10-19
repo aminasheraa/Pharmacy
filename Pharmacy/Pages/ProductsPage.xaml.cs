@@ -24,30 +24,58 @@ namespace Pharmacy.Pages
         {
             InitializeComponent();
             CategoryCB.SelectedIndex = 0;
-            ProductsLB.ItemsSource = Core.Context.Products.ToList();
             UpdateFilters();
+            LoadProducts();
+        }
+
+
+        private int? GetUserPharmacyId()
+        {
+            if (Core.CurrentUser == null)
+                return null;
+
+            var userPharmacy = Core.Context.UserPharmacy.FirstOrDefault(up => up.UserID == Core.CurrentUser.ID);
+
+            if (userPharmacy == null)
+                return null;
+
+            return userPharmacy.PharmacyID;
+        }
+
+        private void LoadProducts()
+        {
+            int? pharmacyId = GetUserPharmacyId();
+
+            if (pharmacyId == null)
+            {
+                ProductsLB.ItemsSource = null;
+                return;
+            }
+
+            var products = Core.Context.ProductPharmacies.Where(p => p.PharmacyID == pharmacyId.Value).ToList().Select(p => new
+                {
+                    p.Products.ID,
+                    p.Products.Name,
+                    p.Products.Price,
+                    p.Products.Image,
+                    p.Count
+                })
+                .ToList();
+
+            ProductsLB.ItemsSource = products;
         }
 
         private void UpdateFilters()
         {
-            if (Core.CurrentUser == null)
+            int? pharmacyId = GetUserPharmacyId();
+
+            if (pharmacyId == null)
             {
                 ProductsLB.ItemsSource = null;
                 return;
             }
 
-            var userPharmacy = Core.CurrentUser.Pharmacies.FirstOrDefault();
-
-            if (userPharmacy == null)
-            {
-                ProductsLB.ItemsSource = null;
-                return;
-            }
-
-            int pharmacyId = userPharmacy.ID;
-
-            var filtered = Core.Context.Products.Where(p => p.ProductPharmacies.Any(pp => pp.PharmacyID == pharmacyId && pp.Count > 0))
-                .ToList();
+            var filtered = Core.Context.Products.Where(p => p.ProductPharmacies.Any(pp => pp.PharmacyID == pharmacyId.Value && pp.Count > 0)).ToList();
 
             string search = SearchBox.Text.Trim().ToLower();
 
@@ -58,8 +86,7 @@ namespace Pharmacy.Pages
 
             if (CategoryCB.SelectedIndex > 0)
             {
-                string selectedCategory =
-                    (CategoryCB.SelectedItem as ComboBoxItem)?.Content.ToString();
+                string selectedCategory = (CategoryCB.SelectedItem as ComboBoxItem)?.Content.ToString();
 
                 if (!string.IsNullOrEmpty(selectedCategory))
                 {

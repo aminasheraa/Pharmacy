@@ -17,6 +17,7 @@ namespace Pharmacy.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Products()
         {
+            this.InventoryDetails = new HashSet<InventoryDetails>();
             this.ProductPharmacies = new HashSet<ProductPharmacies>();
             this.ProductsSupply = new HashSet<ProductsSupply>();
             this.SpecificallyProducts = new HashSet<SpecificallyProducts>();
@@ -28,6 +29,8 @@ namespace Pharmacy.Model
         public decimal Price { get; set; }
         public string Image { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InventoryDetails> InventoryDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductPharmacies> ProductPharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

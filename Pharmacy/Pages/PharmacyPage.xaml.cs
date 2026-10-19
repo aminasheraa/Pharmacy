@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,21 +29,14 @@ namespace Pharmacy.Pages
 
         private void LoadProducts()
         {
-            if (Core.CurrentUser == null)
+            if (Core.CurrentPharmacy == null)
             {
                 DataGridProducts.ItemsSource = null;
+                MessageBox.Show("Аптека не выбрана.");
                 return;
             }
 
-            var pharmacy = Core.CurrentUser.Pharmacies.FirstOrDefault();
-
-            if (pharmacy == null)
-            {
-                DataGridProducts.ItemsSource = null;
-                return;
-            }
-
-            int pharmacyId = pharmacy.ID;
+            int pharmacyId = Core.CurrentPharmacy.ID;
 
             var products = Core.Context.ProductPharmacies.Where(p => p.PharmacyID == pharmacyId && p.Count > 0).ToList()
                 .Select(p => new
@@ -64,7 +58,7 @@ namespace Pharmacy.Pages
 
         private void InventoryBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new InventoryPage());
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

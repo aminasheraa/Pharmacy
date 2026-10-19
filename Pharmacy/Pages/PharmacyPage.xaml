@@ -15,7 +15,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Наличие товаров в аптеке: " Style="{StaticResource HeaderText}"  HorizontalAlignment="Left" Margin="70, 20, 0, 0"/>
-            <DataGrid x:Name="DataGridProducts" Width="650" Height="250"
+            <DataGrid x:Name="DataGridProducts" Width="650" Height="350"
                       Style="{DynamicResource MainDataGridStyle}"
                       ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}"
                       RowStyle="{DynamicResource DataGridRowStyle}"

@@ -11,6 +11,7 @@ namespace Pharmacy
     {
         public static PharmacyEntities Context = new PharmacyEntities();
         public static Users CurrentUser {  get; set; }
+        public static Pharmacies CurrentPharmacy { get; set; }
 
     }
 

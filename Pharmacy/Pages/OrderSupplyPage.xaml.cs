@@ -121,11 +121,9 @@ namespace Pharmacy.Pages
                 return;
             }
 
-            var pharmacy = Core.CurrentUser.Pharmacies.FirstOrDefault();
-
-            if (pharmacy == null)
+            if (Core.CurrentPharmacy == null)
             {
-                MessageBox.Show("Для пользователя не найдена аптека.");
+                MessageBox.Show("Не удалось определить выбранную аптеку.");
                 return;
             }
 
@@ -136,7 +134,7 @@ namespace Pharmacy.Pages
             supply.UserID = Core.CurrentUser.ID;
             supply.Price = total;
             supply.StoragesID = storage.ID;
-            supply.PharmaciesID = pharmacy.ID;
+            supply.PharmaciesID = Core.CurrentPharmacy.ID;
 
             Core.Context.Supplies.Add(supply);
             Core.Context.SaveChanges();
@@ -152,14 +150,14 @@ namespace Pharmacy.Pages
 
                 ProductPharmacies stock = Core.Context.ProductPharmacies.FirstOrDefault(
                     p => p.ProductID == item.ProductID &&
-                         p.PharmacyID == pharmacy.ID
+                         p.PharmacyID == Core.CurrentPharmacy.ID
                 );
 
                 if (stock == null)
                 {
                     ProductPharmacies newStock = new ProductPharmacies();
                     newStock.ProductID = item.ProductID;
-                    newStock.PharmacyID = pharmacy.ID;
+                    newStock.PharmacyID = Core.CurrentPharmacy.ID;
                     newStock.Count = item.Count;
 
                     Core.Context.ProductPharmacies.Add(newStock);

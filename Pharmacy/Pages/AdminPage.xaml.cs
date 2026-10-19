@@ -37,6 +37,8 @@ namespace Pharmacy.Pages
         private void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AddEditUser(null));
+            LoadUsers();
+
 
         }
 
@@ -46,18 +48,73 @@ namespace Pharmacy.Pages
             NavigationService.Navigate(new AddEditUser(user));
         }
 
+
+
+
+
         private void DeleteUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            var user = (sender as Button).DataContext as Users;
-            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого пользователя?", "Подтверждение удаления",
-            MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            if (result == MessageBoxResult.Yes)
+            var user = btn.DataContext as Users;
+            if (user == null) return;
+
+            var realUser = Core.Context.Users
+                .FirstOrDefault(u => u.ID == user.ID);
+
+            if (realUser == null)
             {
-                Core.Context.Users.Remove(user);
+                MessageBox.Show("Пользователь не найден.");
+                return;
             }
-            return;
+
+            MessageBoxResult result = MessageBox.Show(
+                "Удалить пользователя " + realUser.FIO +
+                " и все связанные с ним данные?",
+                "Подтверждение удаления",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            var userPharmacies = Core.Context.UserPharmacy.Where(up => up.UserID == realUser.ID).ToList();
+
+            Core.Context.UserPharmacy.RemoveRange(userPharmacies);
+
+            var orders = Core.Context.OnlineOrder.Where(o => o.UserID == realUser.ID).ToList();
+
+            foreach (var order in orders)
+            {
+                var orderProducts = Core.Context.SpecificallyProducts.Where(p => p.OnlineOrderID == order.ID).ToList();
+                Core.Context.SpecificallyProducts.RemoveRange(orderProducts);
+            }
+
+            Core.Context.OnlineOrder.RemoveRange(orders);
+
+            var supplies = Core.Context.Supplies.Where(s => s.UserID == realUser.ID).ToList();
+
+            foreach (var supply in supplies)
+            {
+                var supplyProducts = Core.Context.ProductsSupply
+                    .Where(p => p.SupplyID == supply.ID)
+                    .ToList();
+
+                Core.Context.ProductsSupply.RemoveRange(supplyProducts);
+            }
+
+            Core.Context.Supplies.RemoveRange(supplies);
+            Core.Context.Users.Remove(realUser);
+            Core.Context.SaveChanges();
+
+            LoadUsers();
+
+            MessageBox.Show("Пользователь и связанные данные удалены","Успех", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+
+
+
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +127,12 @@ namespace Pharmacy.Pages
                 NavigationService.Navigate(new AuthPage());
 
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadUsers();
+
         }
     }
 }

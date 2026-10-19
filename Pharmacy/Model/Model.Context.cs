@@ -27,6 +27,7 @@ namespace Pharmacy.Model
     
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
+        public virtual DbSet<InventoryDetails> InventoryDetails { get; set; }
         public virtual DbSet<OnlineOrder> OnlineOrder { get; set; }
         public virtual DbSet<Pharmacies> Pharmacies { get; set; }
         public virtual DbSet<ProductPharmacies> ProductPharmacies { get; set; }
@@ -38,6 +39,7 @@ namespace Pharmacy.Model
         public virtual DbSet<Storages> Storages { get; set; }
         public virtual DbSet<Supplies> Supplies { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<UserPharmacy> UserPharmacy { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
 }

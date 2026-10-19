@@ -20,7 +20,7 @@ namespace Pharmacy.Model
             this.Inventory = new HashSet<Inventory>();
             this.ProductPharmacies = new HashSet<ProductPharmacies>();
             this.Supplies = new HashSet<Supplies>();
-            this.Users = new HashSet<Users>();
+            this.UserPharmacy = new HashSet<UserPharmacy>();
         }
     
         public int ID { get; set; }
@@ -33,6 +33,6 @@ namespace Pharmacy.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Supplies> Supplies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<UserPharmacy> UserPharmacy { get; set; }
     }
 }

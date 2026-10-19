@@ -32,18 +32,12 @@ namespace Pharmacy.Pages
                 return;
             }
 
-            PharmaciesLB.ItemsSource = Core.CurrentUser.Pharmacies.ToList();
+            int userId = Core.CurrentUser.ID;
+            var pharmacies = Core.Context.UserPharmacy.Where(up => up.UserID == userId).Select(up => up.Pharmacies).ToList();
+
+            PharmaciesLB.ItemsSource = pharmacies;
         }
 
-        private void OrderBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void InventoryBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -60,6 +54,16 @@ namespace Pharmacy.Pages
 
         private void PharmaciesLB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var pharmacy = PharmaciesLB.SelectedItem as Pharmacies;
+
+            if (pharmacy == null)
+            {
+                MessageBox.Show("Сначала выберите аптеку.");
+                return;
+            }
+
+            Core.CurrentPharmacy = pharmacy;
+
             NavigationService.Navigate(new PharmacyPage());
         }
 

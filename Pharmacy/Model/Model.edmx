@@ -22,6 +22,16 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Sum" Type="decimal" Precision="8" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="InventoryDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InventoryID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ExpectedCount" Type="int" Nullable="false" />
+          <Property Name="ActualCount" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="OnlineOrder">
           <Key>
             <PropertyRef Name="ID" />
@@ -129,15 +139,13 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "Pharmacy.dbo.UserPharmacy" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="UserPharmacy">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="PharmacyID" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="PharmacyID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -306,6 +314,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InventoryDetails_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="InventoryDetails" Type="Self.InventoryDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryDetails">
+              <PropertyRef Name="InventoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryDetails_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="InventoryDetails" Type="Self.InventoryDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductCategory_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
@@ -357,6 +389,7 @@
         <EntityContainer Name="Хранилище PharmacyModelContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryDetails" EntityType="Self.InventoryDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductPharmacies" EntityType="Self.ProductPharmacies" Schema="dbo" store:Type="Tables" />
@@ -368,18 +401,13 @@
           <EntitySet Name="Storages" EntityType="Self.Storages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplies" EntityType="Self.Supplies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPharmacy" EntityType="Self.UserPharmacy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ProductCategory].[ProductID] AS [ProductID], 
     [ProductCategory].[CategoryID] AS [CategoryID]
     FROM [dbo].[ProductCategory] AS [ProductCategory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserPharmacy" EntityType="Self.UserPharmacy" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserPharmacy].[UserID] AS [UserID], 
-    [UserPharmacy].[PharmacyID] AS [PharmacyID]
-    FROM [dbo].[UserPharmacy] AS [UserPharmacy]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Inventory__Pharm__5629CD9C" Association="Self.FK__Inventory__Pharm__5629CD9C">
             <End Role="Pharmacies" EntitySet="Pharmacies" />
@@ -433,6 +461,14 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_InventoryDetails_Inventory" Association="Self.FK_InventoryDetails_Inventory">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="InventoryDetails" EntitySet="InventoryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryDetails_Products" Association="Self.FK_InventoryDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="InventoryDetails" EntitySet="InventoryDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -473,6 +509,19 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Sum" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <NavigationProperty Name="Pharmacies" Relationship="Self.FK__Inventory__Pharm__5629CD9C" FromRole="Inventory" ToRole="Pharmacies" />
+          <NavigationProperty Name="InventoryDetails" Relationship="Self.FK_InventoryDetails_Inventory" FromRole="Inventory" ToRole="InventoryDetails" />
+        </EntityType>
+        <EntityType Name="InventoryDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InventoryID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ExpectedCount" Type="Int32" Nullable="false" />
+          <Property Name="ActualCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_InventoryDetails_Inventory" FromRole="InventoryDetails" ToRole="Inventory" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_InventoryDetails_Products" FromRole="InventoryDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="OnlineOrder">
           <Key>
@@ -496,7 +545,7 @@
           <NavigationProperty Name="Inventory" Relationship="Self.FK__Inventory__Pharm__5629CD9C" FromRole="Pharmacies" ToRole="Inventory" />
           <NavigationProperty Name="ProductPharmacies" Relationship="Self.FK__ProductPh__Pharm__534D60F1" FromRole="Pharmacies" ToRole="ProductPharmacies" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__Pharma__4BAC3F29" FromRole="Pharmacies" ToRole="Supplies" />
-          <NavigationProperty Name="Users" Relationship="Self.UserPharmacy" FromRole="Pharmacies" ToRole="Users" />
+          <NavigationProperty Name="UserPharmacy" Relationship="Self.FK_UserPharmacy_Pharmacies" FromRole="Pharmacies" ToRole="UserPharmacy" />
         </EntityType>
         <EntityType Name="ProductPharmacies">
           <Key>
@@ -517,6 +566,7 @@
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InventoryDetails" Relationship="Self.FK_InventoryDetails_Products" FromRole="Products" ToRole="InventoryDetails" />
           <NavigationProperty Name="ProductPharmacies" Relationship="Self.FK__ProductPh__Produ__52593CB8" FromRole="Products" ToRole="ProductPharmacies" />
           <NavigationProperty Name="ProductsSupply" Relationship="Self.FK__ProductsS__Produ__5165187F" FromRole="Products" ToRole="ProductsSupply" />
           <NavigationProperty Name="SpecificallyProducts" Relationship="Self.FK__Specifica__Produ__4D94879B" FromRole="Products" ToRole="SpecificallyProducts" />
@@ -595,6 +645,16 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="UserPharmacy">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PharmacyID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Pharmacies" Relationship="Self.FK_UserPharmacy_Pharmacies" FromRole="UserPharmacy" ToRole="Pharmacies" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_UserPharmacy_Users" FromRole="UserPharmacy" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -608,7 +668,7 @@
           <NavigationProperty Name="OnlineOrder" Relationship="Self.FK__OnlineOrd__UserI__5441852A" FromRole="Users" ToRole="OnlineOrder" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__4AB81AF0" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__UserID__4F7CD00D" FromRole="Users" ToRole="Supplies" />
-          <NavigationProperty Name="Pharmacies" Relationship="Self.UserPharmacy" FromRole="Users" ToRole="Pharmacies" />
+          <NavigationProperty Name="UserPharmacy" Relationship="Self.FK_UserPharmacy_Users" FromRole="Users" ToRole="UserPharmacy" />
         </EntityType>
         <Association Name="FK__Inventory__Pharm__5629CD9C">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -619,6 +679,30 @@
             </Principal>
             <Dependent Role="Inventory">
               <PropertyRef Name="PharmacyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryDetails_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="InventoryDetails" Type="Self.InventoryDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryDetails">
+              <PropertyRef Name="InventoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryDetails_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="InventoryDetails" Type="Self.InventoryDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryDetails">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -679,6 +763,18 @@
             </Principal>
             <Dependent Role="Supplies">
               <PropertyRef Name="PharmaciesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPharmacy_Pharmacies">
+          <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+          <End Role="UserPharmacy" Type="Self.UserPharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pharmacies">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPharmacy">
+              <PropertyRef Name="PharmacyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -766,17 +862,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserPharmacy_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserPharmacy" Type="Self.UserPharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserPharmacy">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ProductCategory">
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
         </Association>
-        <Association Name="UserPharmacy">
-          <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="*" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="PharmacyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" />
+          <EntitySet Name="InventoryDetails" EntityType="Self.InventoryDetails" />
           <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" />
           <EntitySet Name="ProductPharmacies" EntityType="Self.ProductPharmacies" />
@@ -788,10 +893,19 @@
           <EntitySet Name="Storages" EntityType="Self.Storages" />
           <EntitySet Name="Supplies" EntityType="Self.Supplies" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="UserPharmacy" EntityType="Self.UserPharmacy" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK__Inventory__Pharm__5629CD9C" Association="Self.FK__Inventory__Pharm__5629CD9C">
             <End Role="Pharmacies" EntitySet="Pharmacies" />
             <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryDetails_Inventory" Association="Self.FK_InventoryDetails_Inventory">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="InventoryDetails" EntitySet="InventoryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryDetails_Products" Association="Self.FK_InventoryDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="InventoryDetails" EntitySet="InventoryDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__OnlineOrd__Statu__5535A963" Association="Self.FK__OnlineOrd__Statu__5535A963">
             <End Role="Status" EntitySet="Status" />
@@ -812,6 +926,10 @@
           <AssociationSet Name="FK__Supplies__Pharma__4BAC3F29" Association="Self.FK__Supplies__Pharma__4BAC3F29">
             <End Role="Pharmacies" EntitySet="Pharmacies" />
             <End Role="Supplies" EntitySet="Supplies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPharmacy_Pharmacies" Association="Self.FK_UserPharmacy_Pharmacies">
+            <End Role="Pharmacies" EntitySet="Pharmacies" />
+            <End Role="UserPharmacy" EntitySet="UserPharmacy" />
           </AssociationSet>
           <AssociationSet Name="FK__ProductPh__Produ__52593CB8" Association="Self.FK__ProductPh__Produ__52593CB8">
             <End Role="Products" EntitySet="Products" />
@@ -841,13 +959,13 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Supplies" EntitySet="Supplies" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserPharmacy_Users" Association="Self.FK_UserPharmacy_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserPharmacy" EntitySet="UserPharmacy" />
+          </AssociationSet>
           <AssociationSet Name="ProductCategory" Association="Self.ProductCategory">
             <End Role="Category" EntitySet="Category" />
             <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="UserPharmacy" Association="Self.UserPharmacy">
-            <End Role="Pharmacies" EntitySet="Pharmacies" />
-            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -872,6 +990,17 @@
                 <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryDetails">
+            <EntityTypeMapping TypeName="PharmacyModel.InventoryDetails">
+              <MappingFragment StoreEntitySet="InventoryDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ExpectedCount" ColumnName="ExpectedCount" />
+                <ScalarProperty Name="ActualCount" ColumnName="ActualCount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -983,6 +1112,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserPharmacy">
+            <EntityTypeMapping TypeName="PharmacyModel.UserPharmacy">
+              <MappingFragment StoreEntitySet="UserPharmacy">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PharmacyModel.Users">
               <MappingFragment StoreEntitySet="Users">
@@ -1001,14 +1139,6 @@
             </EndProperty>
             <EndProperty Name="Products">
               <ScalarProperty Name="ID" ColumnName="ProductID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="UserPharmacy" TypeName="PharmacyModel.UserPharmacy" StoreEntitySet="UserPharmacy">
-            <EndProperty Name="Pharmacies">
-              <ScalarProperty Name="ID" ColumnName="PharmacyID" />
-            </EndProperty>
-            <EndProperty Name="Users">
-              <ScalarProperty Name="ID" ColumnName="UserID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

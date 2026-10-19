@@ -14,6 +14,12 @@ namespace Pharmacy.Model
     
     public partial class Inventory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Inventory()
+        {
+            this.InventoryDetails = new HashSet<InventoryDetails>();
+        }
+    
         public int ID { get; set; }
         public System.DateTime Date { get; set; }
         public int PharmacyID { get; set; }
@@ -21,5 +27,7 @@ namespace Pharmacy.Model
         public decimal Sum { get; set; }
     
         public virtual Pharmacies Pharmacies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InventoryDetails> InventoryDetails { get; set; }
     }
 }
