@@ -35,7 +35,7 @@
                 <ComboBoxItem Content="Сосудосуживающие"/>
                 <ComboBoxItem Content="Анальгетик"/>
             </ComboBox>
-            <ComboBox x:Name="SortCB" Width="120" Margin="10" SelectionChanged="SortCB_SelectionChanged" ToolTip="Сортировка препаратов по цене">
+            <ComboBox x:Name="SortCB" Width="110" Margin="10" SelectionChanged="SortCB_SelectionChanged" ToolTip="Сортировка препаратов по цене">
                 <ComboBoxItem Content="Цена по возрастанию "/>
                 <ComboBoxItem Content="Цена по убыванию"/>
             </ComboBox>

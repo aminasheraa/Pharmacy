@@ -28,7 +28,6 @@ namespace Pharmacy.Pages
             LoadProducts();
         }
 
-
         private int? GetUserPharmacyId()
         {
             if (Core.CurrentUser == null)
