@@ -49,9 +49,6 @@ namespace Pharmacy.Pages
         }
 
 
-
-
-
         private void DeleteUserBtn_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
@@ -60,8 +57,7 @@ namespace Pharmacy.Pages
             var user = btn.DataContext as Users;
             if (user == null) return;
 
-            var realUser = Core.Context.Users
-                .FirstOrDefault(u => u.ID == user.ID);
+            var realUser = Core.Context.Users.FirstOrDefault(u => u.ID == user.ID);
 
             if (realUser == null)
             {
@@ -69,12 +65,7 @@ namespace Pharmacy.Pages
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show(
-                "Удалить пользователя " + realUser.FIO +
-                " и все связанные с ним данные?",
-                "Подтверждение удаления",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Удалить пользователя " + realUser.FIO + " и все связанные с ним данные?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes) return;
 
@@ -111,10 +102,6 @@ namespace Pharmacy.Pages
 
             MessageBox.Show("Пользователь и связанные данные удалены","Успех", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
-
-
-
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {

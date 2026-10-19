@@ -3,7 +3,7 @@
 
     <Style x:Key="HeaderText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Book Antiqua"/>
-        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="FontSize" Value="21"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
     

@@ -12,21 +12,21 @@
         <Button x:Name="BackBtn" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Width="120" Content="Назад" Click="BackBtn_Click"/>
         <Border Style="{DynamicResource MainBorder}" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="5">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="TitleTb" Text="Добавление/редактирование пользователя" HorizontalAlignment="Center" FontWeight="Bold" Margin="5"/>
+                <TextBlock x:Name="TitleTb" Text="Добавление/редактирование пользователя" HorizontalAlignment="Center" FontWeight="Bold" Margin="10"/>
                 <TextBlock Text="Введите ФИО: "/>
-                <TextBox x:Name="FIOBox" Height="30" Width="300" ToolTip="Введите ФИО пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="ФИО"/>
+                <TextBox x:Name="FIOBox" Height="30" Width="380" ToolTip="Введите ФИО пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="ФИО"/>
 
                 <TextBlock Text="Введите логин: "/>
-                <TextBox x:Name="LoginBox" Height="30" Width="300" ToolTip="Введите логин пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Логин"/>
+                <TextBox x:Name="LoginBox" Height="30" Width="380" ToolTip="Введите логин пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Логин"/>
 
                 <TextBlock Text="Введите пароль: "/>
-                <TextBox x:Name="PasswordBox" Height="30" Width="300" ToolTip="Введите пароль пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Пароль"/>
+                <TextBox x:Name="PasswordBox" Height="30" Width="380" ToolTip="Введите пароль пользователя" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Пароль"/>
 
                 <TextBlock Text="Выберите дату рождения: " />
-                <DatePicker x:Name="BirthDP" Height="40" Width="300" ToolTip="Выберите дату рождения пользователя"/>
+                <DatePicker x:Name="BirthDP" Height="40" Width="380" ToolTip="Выберите дату рождения пользователя"/>
 
                 <TextBlock Text="Выберите роль: "/>
-                <ComboBox x:Name="RoleCB" Height="30" Width="300" DisplayMemberPath="Name" ToolTip="Выберите роль пользователя">
+                <ComboBox x:Name="RoleCB" Height="30" Width="380" DisplayMemberPath="Name" ToolTip="Выберите роль пользователя">
                 </ComboBox>
                 <Button x:Name="SaveBtn" Content="Сохранить" Margin="10" Click="SaveBtn_Click" ToolTip="Сохраните пользователя"/>
 

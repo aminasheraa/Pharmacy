@@ -67,5 +67,10 @@ namespace Pharmacy.Pages
             NavigationService.Navigate(new PharmacyPage());
         }
 
+        private void DiagramBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DiagramPage());
+
+        }
     }
 }

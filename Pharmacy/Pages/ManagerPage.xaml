@@ -16,6 +16,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
             <TextBlock Text="Пользователь" x:Name="ManagerName"  Style="{StaticResource HeaderText}" VerticalAlignment="Center" Margin="20" FontWeight="Bold"/>
             <Button x:Name="ExitBtn" Content="Выход" Background="#CD5C5C"  Click="ExitBtn_Click"  Margin="10" Width="100" ToolTip="Выход из аккаунта"/>
+            <Button x:Name="DiagramBtn" Content="Диаграммы" Margin="10" Width="120" ToolTip="Сравнительная диаграмма по вашим аптекам" Click="DiagramBtn_Click"/>
 
         </StackPanel>
 
