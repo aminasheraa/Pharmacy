@@ -1,0 +1,66 @@
+﻿<Page x:Class="Pharmacy.Pages.OnlineOrderDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="600"
+      d:DesignWidth="900"
+      Title="Интернет-заказ"
+      Style="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Content="Назад" Width="120" Grid.Row="0" HorizontalAlignment="Left" Margin="10" Click="BackBtn_Click"/>
+        <Border Grid.Row="1" Style="{StaticResource MainBorder}" Margin="15" Padding="20" CornerRadius="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="HeaderTB" Text="Интернет-заказ" Style="{StaticResource HeaderText}" Margin="5,5,5,20"/>
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock FontSize="16" x:Name="OrderIDTB" Margin="0,5" Text="Номер заказа: "/>
+                        <TextBlock FontSize="16" Margin="0,5" Text="Дата: " x:Name="OrderDateTB"/>
+                        <TextBlock FontSize="16" Margin="0,5" Text="Покупатель: " x:Name="UserIDTB"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock FontSize="16" Margin="0,5" Text="Статус: " x:Name="StatusTB"/>
+                        <TextBlock FontSize="16" Margin="0,5" Text="Итоговая сумма: " x:Name="PriceTB"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Grid.Row="2" Text="Состав заказа" Style="{StaticResource HeaderText}" Margin="5,20,5,10"/>
+                <StackPanel Grid.Row="3" >
+                    <DataGrid x:Name="OrderProductsDG" Grid.Row="3" Height="170" Margin="5" Style="{DynamicResource MainDataGridStyle}" ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}"
+                RowStyle="{DynamicResource DataGridRowStyle}" CellStyle="{DynamicResource DataGridCellStyle}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Препарат" Binding="{Binding Name}" Width="2*"/>
+                        <DataGridTextColumn Header="Цена за упаковку" Binding="{Binding Price, StringFormat={}{0:N2} руб.}" Width="*"/>
+                        <DataGridTextColumn Header="Срок годности" Binding="{Binding ExpirationDate, StringFormat=dd.MM.yyyy}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="ReturnBtn" Background="#CD5C5C" Content="Возврат заказа" Margin="10,5" Click="ReturnOrderBtn_Click"/>
+                        <Button x:Name="GiveBtn" Background="#468C68" Content="Выдача заказа" Margin="10,5"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

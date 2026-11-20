@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище PharmacyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
@@ -41,6 +41,17 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineOrderReturns">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OnlineOrderID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ReturnDate" Type="date" Nullable="false" />
+          <Property Name="ReasonID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Pharmacies">
           <Key>
@@ -85,6 +96,13 @@
           <Property Name="SupplyID" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnReasons">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -338,6 +356,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OnlineOrderReturns_OnlineOrder">
+          <End Role="OnlineOrder" Type="Self.OnlineOrder" Multiplicity="1" />
+          <End Role="OnlineOrderReturns" Type="Self.OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineOrder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="OnlineOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineOrderReturns_ReturnReasons">
+          <End Role="ReturnReasons" Type="Self.ReturnReasons" Multiplicity="1" />
+          <End Role="OnlineOrderReturns" Type="Self.OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnReasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineOrderReturns_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OnlineOrderReturns" Type="Self.OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductCategory_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
@@ -391,10 +445,12 @@
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryDetails" EntityType="Self.InventoryDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlineOrder" EntityType="Self.OnlineOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineOrderReturns" EntityType="Self.OnlineOrderReturns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductPharmacies" EntityType="Self.ProductPharmacies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductsSupply" EntityType="Self.ProductsSupply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReturnReasons" EntityType="Self.ReturnReasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SpecificallyProducts" EntityType="Self.SpecificallyProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -469,6 +525,18 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="InventoryDetails" EntitySet="InventoryDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_OnlineOrderReturns_OnlineOrder" Association="Self.FK_OnlineOrderReturns_OnlineOrder">
+            <End Role="OnlineOrder" EntitySet="OnlineOrder" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineOrderReturns_ReturnReasons" Association="Self.FK_OnlineOrderReturns_ReturnReasons">
+            <End Role="ReturnReasons" EntitySet="ReturnReasons" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineOrderReturns_Users" Association="Self.FK_OnlineOrderReturns_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -486,8 +554,7 @@
             <End Role="UserPharmacy" EntitySet="UserPharmacy" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PharmacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -535,6 +602,7 @@
           <NavigationProperty Name="Status" Relationship="Self.FK__OnlineOrd__Statu__5535A963" FromRole="OnlineOrder" ToRole="Status" />
           <NavigationProperty Name="Users" Relationship="Self.FK__OnlineOrd__UserI__5441852A" FromRole="OnlineOrder" ToRole="Users" />
           <NavigationProperty Name="SpecificallyProducts" Relationship="Self.FK__Specifica__Onlin__4E88ABD4" FromRole="OnlineOrder" ToRole="SpecificallyProducts" />
+          <NavigationProperty Name="OnlineOrderReturns" Relationship="PharmacyModel.FK_OnlineOrderReturns_OnlineOrder" FromRole="OnlineOrder" ToRole="OnlineOrderReturns" />
         </EntityType>
         <EntityType Name="Pharmacies">
           <Key>
@@ -669,6 +737,7 @@
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__4AB81AF0" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__Supplies__UserID__4F7CD00D" FromRole="Users" ToRole="Supplies" />
           <NavigationProperty Name="UserPharmacy" Relationship="Self.FK_UserPharmacy_Users" FromRole="Users" ToRole="UserPharmacy" />
+          <NavigationProperty Name="OnlineOrderReturns" Relationship="PharmacyModel.FK_OnlineOrderReturns_Users" FromRole="Users" ToRole="OnlineOrderReturns" />
         </EntityType>
         <Association Name="FK__Inventory__Pharm__5629CD9C">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -967,7 +1036,79 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="OnlineOrderReturns" EntityType="PharmacyModel.OnlineOrderReturns" />
+          <EntitySet Name="ReturnReasons" EntityType="PharmacyModel.ReturnReasons" />
+          <AssociationSet Name="FK_OnlineOrderReturns_OnlineOrder" Association="PharmacyModel.FK_OnlineOrderReturns_OnlineOrder">
+            <End Role="OnlineOrder" EntitySet="OnlineOrder" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineOrderReturns_ReturnReasons" Association="PharmacyModel.FK_OnlineOrderReturns_ReturnReasons">
+            <End Role="ReturnReasons" EntitySet="ReturnReasons" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OnlineOrderReturns_Users" Association="PharmacyModel.FK_OnlineOrderReturns_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OnlineOrderReturns" EntitySet="OnlineOrderReturns" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="OnlineOrderReturns">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OnlineOrderID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ReturnDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReasonID" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OnlineOrder" Relationship="PharmacyModel.FK_OnlineOrderReturns_OnlineOrder" FromRole="OnlineOrderReturns" ToRole="OnlineOrder" />
+          <NavigationProperty Name="ReturnReasons" Relationship="PharmacyModel.FK_OnlineOrderReturns_ReturnReasons" FromRole="OnlineOrderReturns" ToRole="ReturnReasons" />
+          <NavigationProperty Name="Users" Relationship="PharmacyModel.FK_OnlineOrderReturns_Users" FromRole="OnlineOrderReturns" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ReturnReasons">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OnlineOrderReturns" Relationship="PharmacyModel.FK_OnlineOrderReturns_ReturnReasons" FromRole="ReturnReasons" ToRole="OnlineOrderReturns" />
+        </EntityType>
+        <Association Name="FK_OnlineOrderReturns_OnlineOrder">
+          <End Type="PharmacyModel.OnlineOrder" Role="OnlineOrder" Multiplicity="1" />
+          <End Type="PharmacyModel.OnlineOrderReturns" Role="OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineOrder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="OnlineOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineOrderReturns_ReturnReasons">
+          <End Type="PharmacyModel.ReturnReasons" Role="ReturnReasons" Multiplicity="1" />
+          <End Type="PharmacyModel.OnlineOrderReturns" Role="OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnReasons">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="ReasonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OnlineOrderReturns_Users">
+          <End Type="PharmacyModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PharmacyModel.OnlineOrderReturns" Role="OnlineOrderReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OnlineOrderReturns">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1141,6 +1282,26 @@
               <ScalarProperty Name="ID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="OnlineOrderReturns">
+            <EntityTypeMapping TypeName="PharmacyModel.OnlineOrderReturns">
+              <MappingFragment StoreEntitySet="OnlineOrderReturns">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ReasonID" ColumnName="ReasonID" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OnlineOrderID" ColumnName="OnlineOrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnReasons">
+            <EntityTypeMapping TypeName="PharmacyModel.ReturnReasons">
+              <MappingFragment StoreEntitySet="ReturnReasons">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

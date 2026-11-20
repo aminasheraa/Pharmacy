@@ -18,6 +18,7 @@ namespace Pharmacy.Model
         public OnlineOrder()
         {
             this.SpecificallyProducts = new HashSet<SpecificallyProducts>();
+            this.OnlineOrderReturns = new HashSet<OnlineOrderReturns>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace Pharmacy.Model
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecificallyProducts> SpecificallyProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OnlineOrderReturns> OnlineOrderReturns { get; set; }
     }
 }

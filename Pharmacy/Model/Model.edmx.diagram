@@ -39,6 +39,11 @@
         <AssociationConnector Association="PharmacyModel.FK__Supplies__UserID__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="PharmacyModel.FK_UserPharmacy_Users" ManuallyRouted="false" />
         <AssociationConnector Association="PharmacyModel.ProductCategory" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PharmacyModel.OnlineOrderReturns" Width="1.5" PointX="8.25" PointY="15.625" />
+        <EntityTypeShape EntityType="PharmacyModel.ReturnReasons" Width="1.5" PointX="6" PointY="19.125" />
+        <AssociationConnector Association="PharmacyModel.FK_OnlineOrderReturns_OnlineOrder" />
+        <AssociationConnector Association="PharmacyModel.FK_OnlineOrderReturns_ReturnReasons" />
+        <AssociationConnector Association="PharmacyModel.FK_OnlineOrderReturns_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

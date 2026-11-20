@@ -68,14 +68,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Grid>
-                        <!-- Основная рамка текстового поля -->
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True">
-                            <!-- Область, где отображается вводимый текст -->
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
 
-                        <!-- Плейсхолдер. Скрыт по умолчанию -->
                         <TextBlock x:Name="placeholderText" 
                                Text="{TemplateBinding Tag}" 
                                Foreground="Gray" 
@@ -85,14 +82,11 @@
                                Visibility="Collapsed"/>
                     </Grid>
 
-                    <!-- Рабочие триггеры WPF -->
                     <ControlTemplate.Triggers>
-                        <!-- 1. Если текст пустой — показываем подсказку -->
                         <Trigger Property="Text" Value="">
                             <Setter TargetName="placeholderText" Property="Visibility" Value="Visible"/>
                         </Trigger>
 
-                        <!-- 2. Если пользователь кликнул в поле (фокус) — скрываем подсказку -->
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="placeholderText" Property="Visibility" Value="Collapsed"/>
                         </Trigger>

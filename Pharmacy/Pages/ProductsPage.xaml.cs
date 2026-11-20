@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Pharmacy.Model;
 
 namespace Pharmacy.Pages
 {
@@ -24,8 +25,8 @@ namespace Pharmacy.Pages
         {
             InitializeComponent();
             CategoryCB.SelectedIndex = 0;
+            SortCB.SelectedIndex = 0;
             UpdateFilters();
-            LoadProducts();
         }
 
         private int? GetUserPharmacyId()
@@ -40,30 +41,6 @@ namespace Pharmacy.Pages
 
             return userPharmacy.PharmacyID;
         }
-
-        private void LoadProducts()
-        {
-            int? pharmacyId = GetUserPharmacyId();
-
-            if (pharmacyId == null)
-            {
-                ProductsLB.ItemsSource = null;
-                return;
-            }
-
-            var products = Core.Context.ProductPharmacies.Where(p => p.PharmacyID == pharmacyId.Value).ToList().Select(p => new
-                {
-                    p.Products.ID,
-                    p.Products.Name,
-                    p.Products.Price,
-                    p.Products.Image,
-                    p.Count
-                })
-                .ToList();
-
-            ProductsLB.ItemsSource = products;
-        }
-
         private void UpdateFilters()
         {
             int? pharmacyId = GetUserPharmacyId();
@@ -74,13 +51,15 @@ namespace Pharmacy.Pages
                 return;
             }
 
-            var filtered = Core.Context.Products.Where(p => p.ProductPharmacies.Any(pp => pp.PharmacyID == pharmacyId.Value && pp.Count > 0)).ToList();
+            var filtered = Core.Context.ProductPharmacies
+                .Where(p => p.PharmacyID == pharmacyId.Value && p.Count > 0)
+                .ToList();
 
             string search = SearchBox.Text.Trim().ToLower();
 
             if (!string.IsNullOrEmpty(search))
             {
-                filtered = filtered.Where(p => p.Name.ToLower().Contains(search)).ToList();
+                filtered = filtered.Where(p => p.Products.Name.ToLower().Contains(search)).ToList();
             }
 
             if (CategoryCB.SelectedIndex > 0)
@@ -89,18 +68,18 @@ namespace Pharmacy.Pages
 
                 if (!string.IsNullOrEmpty(selectedCategory))
                 {
-                    filtered = filtered.Where(p => p.Category.Any(c => c.Name == selectedCategory)).ToList();
+                    filtered = filtered.Where(p => p.Products.Category.Any(c => c.Name == selectedCategory)).ToList();
                 }
             }
 
             switch (SortCB.SelectedIndex)
             {
                 case 0:
-                    filtered = filtered.OrderBy(p => p.Price).ToList();
+                    filtered = filtered.OrderBy(p => p.Products.Price).ToList();
                     break;
 
                 case 1:
-                    filtered = filtered.OrderByDescending(p => p.Price).ToList();
+                    filtered = filtered.OrderByDescending(p => p.Products.Price).ToList();
                     break;
             }
 
@@ -120,6 +99,39 @@ namespace Pharmacy.Pages
         private void SortCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateFilters();
+        }
+
+        private void OpenProductBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ProductPharmacies productPharmacy =
+                (sender as Button).DataContext as ProductPharmacies;
+
+            if (productPharmacy == null)
+            {
+                MessageBox.Show("Не удалось получить товар!");
+                return;
+            }
+
+            NavigationService.Navigate(new ProductPage(productPharmacy.Products));
+        }
+
+        private void LogOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            var result = MessageBox.Show("Вы уверены, что хотите выйти из аккаунта?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Core.CurrentUser = null;
+
+                NavigationService.Navigate(new AuthPage());
+
+            }
+        }
+
+        private void OnlineOrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new OnlineOrdersPage());
         }
     }
 }

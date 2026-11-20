@@ -11,15 +11,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Grid.Row="0"  Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Наличие в моей аптеке"  Style="{StaticResource HeaderText}" VerticalAlignment="Center" Margin="10"/>
+            <Button x:Name="LogOutBtn" Content="Выход" Background="#CD5C5C" Width="120" Height="30" Click="LogOutBtn_Click"/>
+            <Button x:Name="OnlineOrderBtn" Content="Интернет-заказы" Margin="10" Height="30" Click="OnlineOrderBtn_Click"/>
+
+        </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Width="190" Height="33" HorizontalAlignment="Center" Margin="10" Background="White">
                 <TextBox x:Name="SearchBox" Background="Transparent" BorderThickness="0" TextChanged="SearchBox_TextChanged" ToolTip="Поиск препаратов в аптеке" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Поиск"/>
             </Border>
-            <ComboBox x:Name="CategoryCB" Width="120" Margin="10" SelectionChanged="CategoryCB_SelectionChanged" ToolTip="Сортировка препаратов по категориям">
+            <ComboBox x:Name="CategoryCB" Width="150" Margin="10" SelectionChanged="CategoryCB_SelectionChanged" ToolTip="Сортировка препаратов по категориям">
                 <ComboBoxItem Content="Все категории"/>
                 <ComboBoxItem Content="Обезболивающее"/>
                 <ComboBoxItem Content="Жаропонижающее"/>
@@ -35,23 +42,25 @@
                 <ComboBoxItem Content="Сосудосуживающие"/>
                 <ComboBoxItem Content="Анальгетик"/>
             </ComboBox>
-            <ComboBox x:Name="SortCB" Width="110" Margin="10" SelectionChanged="SortCB_SelectionChanged" ToolTip="Сортировка препаратов по цене">
+            <ComboBox x:Name="SortCB" Width="150" Margin="10" SelectionChanged="SortCB_SelectionChanged" ToolTip="Сортировка препаратов по цене">
+                <ComboBoxItem Content="Без сортировки "/>
                 <ComboBoxItem Content="Цена по возрастанию "/>
                 <ComboBoxItem Content="Цена по убыванию"/>
             </ComboBox>
         </StackPanel>
-        <ListBox x:Name="ProductsLB" Grid.Row="1" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+        <ListBox x:Name="ProductsLB" Grid.Row="2" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{DynamicResource MainBorder}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" CornerRadius="8" Padding="10" Margin="10">
 
                         <StackPanel>
                             <Border CornerRadius="8" Width="160" HorizontalAlignment="Center" Margin="10" Background="White">
-                                <Image Margin="5" Source="{Binding Image}" Stretch="Uniform" ToolTip="Картинка препарата"/>
+                                <Image Margin="5" Source="{Binding Products.Image}" Stretch="Uniform" ToolTip="Картинка препарата"/>
                             </Border>
-                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontWeight="Bold" Margin="5" ToolTip="Название препарата"/>
-                            <TextBlock Text="{Binding Price, StringFormat=Цена: {0}}" TextWrapping="Wrap" Margin="5" ToolTip="Цена препарата"/>
+                            <TextBlock Text="{Binding Products.Name}" TextWrapping="Wrap" FontWeight="Bold" Margin="5" ToolTip="Название препарата"/>
+                            <TextBlock Text="{Binding Products.Price, StringFormat=Цена: {0}}" TextWrapping="Wrap" Margin="5" ToolTip="Цена препарата"/>
                             <TextBlock Text="{Binding Count, StringFormat=В наличии: {0} шт.}" TextWrapping="Wrap" Margin="5" ToolTip="Количество препарата в аптеке"/>
+                            <Button x:Name="OpenProductBtn" Width="170" Tag="{Binding}" Content="Смотреть подробнее" Click="OpenProductBtn_Click"/>
                         </StackPanel>
 
                     </Border>

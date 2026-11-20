@@ -41,5 +41,7 @@ namespace Pharmacy.Model
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserPharmacy> UserPharmacy { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<OnlineOrderReturns> OnlineOrderReturns { get; set; }
+        public virtual DbSet<ReturnReasons> ReturnReasons { get; set; }
     }
 }

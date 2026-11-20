@@ -107,6 +107,9 @@
     <Compile Include="Model\OnlineOrder.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\OnlineOrderReturns.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Pharmacies.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -117,6 +120,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ProductsSupply.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ReturnReasons.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Roles.cs">
@@ -161,11 +167,20 @@
     <Compile Include="Pages\ManagerPage.xaml.cs">
       <DependentUpon>ManagerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\OnlineOrderDetailsPage.xaml.cs">
+      <DependentUpon>OnlineOrderDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OnlineOrdersPage.xaml.cs">
+      <DependentUpon>OnlineOrdersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\OrderSupplyPage.xaml.cs">
       <DependentUpon>OrderSupplyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PharmacyPage.xaml.cs">
       <DependentUpon>PharmacyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProductPage.xaml.cs">
+      <DependentUpon>ProductPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProductsPage.xaml.cs">
       <DependentUpon>ProductsPage.xaml</DependentUpon>
@@ -214,6 +229,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\OnlineOrderDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OnlineOrdersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\OrderSupplyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -222,12 +245,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ProductsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReturnOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\ReturnOrderPage.xaml.cs">
+      <DependentUpon>ReturnOrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
