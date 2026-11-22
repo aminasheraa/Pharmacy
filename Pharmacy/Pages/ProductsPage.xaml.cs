@@ -133,5 +133,10 @@ namespace Pharmacy.Pages
         {
             NavigationService.Navigate(new OnlineOrdersPage());
         }
+
+        private void SupplyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new SupplyAcceptancePage());
+        }
     }
 }

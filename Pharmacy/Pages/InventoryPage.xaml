@@ -1,67 +1,81 @@
 ﻿<Page x:Class="Pharmacy.Pages.InventoryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Pharmacy.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="InventoryPage" Style="{DynamicResource PageBackground}">
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="600"
+      d:DesignWidth="800"
+      Title="InventoryPage"
+      Style="{StaticResource PageBackground}">
 
-    <Grid Margin="20">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Инвентаризация товаров" Style="{StaticResource HeaderText}" Margin="0,0,0,15"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
-            <TextBlock Text="Аптека:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <ComboBox x:Name="PharmacyCB" Width="260" Height="30" DisplayMemberPath="Address" SelectionChanged="PharmacyCB_SelectionChanged"/>
-            <Button x:Name="LoadBtn" Content="Загрузить остатки" Width="150" Margin="12,0,0,0" Click="LoadBtn_Click"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 
-        <DataGrid x:Name="InventoryDG" Grid.Row="2" SelectionMode="Single" HeadersVisibility="Column" Margin="0,0,0,12" CellEditEnding="InventoryDG_CellEditEnding" Style="{DynamicResource MainDataGridStyle}"
-        ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}" RowStyle="{DynamicResource DataGridRowStyle}" CellStyle="{DynamicResource DataGridCellStyle}" ItemsSource="{Binding}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID товара" Binding="{Binding ProductID}" Width="80" />
-                <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*"/>
-                <DataGridTextColumn Header="По учёту" Binding="{Binding ExpectedCount}" Width="100"/>
-                <DataGridTextColumn Header="Фактически" Binding="{Binding ActualCount, UpdateSourceTrigger=PropertyChanged}" Width="110"/>
-                <DataGridTextColumn Header="Расхождение" Binding="{Binding Difference}" Width="110"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="90"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            <StackPanel>
+                <TextBlock Text="Инвентаризация товаров" Style="{StaticResource HeaderText}" Margin="0,0,0,12"/>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,12">
-            <TextBlock x:Name="SummaryTB" VerticalAlignment="Center" FontWeight="Bold" Text="Товаров: 0; расхождений: 0"/>
-            <Button x:Name="SaveBtn" Width="260" Content="Сохранить инвентаризацию" Margin="20,0,0,0" Padding="12,5" Click="SaveBtn_Click"/>
-        </StackPanel>
-        <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="История инвентаризаций" FontSize="18" FontWeight="Bold" Margin="0,0,0,8"/>
-            <DataGrid x:Name="HistoryDG" Grid.Row="1" SelectionMode="Single" Style="{DynamicResource MainDataGridStyle}" ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}" RowStyle="{DynamicResource DataGridRowStyle}"
-            CellStyle="{DynamicResource DataGridCellStyle}" ItemsSource="{Binding}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Номер" Binding="{Binding ID}" Width="70"/>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" Width="120"/>
-                    <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="120"/>
-                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=N2}" Width="120"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <TextBlock Text="Аптека:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox x:Name="PharmacyCB" Width="260" Height="30" DisplayMemberPath="Address" SelectionChanged="PharmacyCB_SelectionChanged"/>
+                    <Button x:Name="LoadBtn" Content="Загрузить остатки" Width="145" Margin="10,0,0,0" Click="LoadBtn_Click"/>
+                </StackPanel>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                <Button x:Name="BackBtn" Content="Назад" Click="BackBtn_Click" Margin="0,0,10,0" Width="120"/>
-                <Button x:Name="ExcelBtn" Content="Экспорт в Excel" Padding="12,6" Margin="0,0,10,0" Click="ExcelBtn_Click"/>
-                <Button x:Name="WordBtn" Content="Экспорт в Word"  Padding="12,6" Click="WordBtn_Click"/>
+                <StackPanel Margin="0,0,0,12">
+                    <TextBlock Text="Остатки товаров" FontSize="16" FontWeight="Bold" Margin="0,0,0,7"/>
+                    <DataGrid x:Name="InventoryDG" Height="230" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="False" SelectionMode="Single" SelectionUnit="CellOrRowHeader" HeadersVisibility="Column"
+                    CellEditEnding="InventoryDG_CellEditEnding" Style="{DynamicResource MainDataGridStyle}" ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}" RowStyle="{DynamicResource DataGridRowStyle}" CellStyle="{DynamicResource DataGridCellStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID товара" Binding="{Binding ProductID}" Width="75" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="По учёту" Binding="{Binding ExpectedCount}" Width="85" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Фактически" Binding="{Binding ActualCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="95" IsReadOnly="False"/>
+                            <DataGridTextColumn Header="Расхождение" Binding="{Binding Difference}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=N2}" Width="85" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock x:Name="SummaryTB" Text="Товаров: 0; расхождений: 0" FontWeight="Bold" TextWrapping="Wrap" Margin="3,8,3,2"/>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Text="История инвентаризаций" FontSize="16" FontWeight="Bold" Margin="0,0,0,7"/>
+                    <DataGrid x:Name="HistoryDG" Height="150" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" HeadersVisibility="Column"
+                     Style="{DynamicResource MainDataGridStyle}" ColumnHeaderStyle="{DynamicResource DataGridHeaderStyle}" RowStyle="{DynamicResource DataGridRowStyle}" CellStyle="{DynamicResource DataGridCellStyle}">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Номер" Binding="{Binding ID}" Width="65"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=dd.MM.yyyy}" Width="110"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="100"/>
+                            <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=N2}" Width="*"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </StackPanel>
-        </Grid>
+        </ScrollViewer>
+
+        <Border Grid.Row="1" Padding="0,10,0,0">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="SaveBtn" Grid.Column="1" Content="Сохранить" Width="110" Padding="6" Margin="0,0,7,0" Click="SaveBtn_Click"/>
+                <Button x:Name="BackBtn" Grid.Column="2" Content="Назад" Width="85" Padding="6" Margin="0,0,7,0" Click="BackBtn_Click"/>
+                <Button x:Name="ExcelBtn" Grid.Column="3" Content="Экспорт в Excel" Padding="8,6" Margin="0,0,7,0" Click="ExcelBtn_Click"/>
+                <Button x:Name="WordBtn" Grid.Column="4" Content="Экспорт в Word" Padding="8,6" Click="WordBtn_Click"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

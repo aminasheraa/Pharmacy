@@ -26,6 +26,8 @@ namespace Pharmacy.Model
         public decimal Price { get; set; }
         public int StoragesID { get; set; }
         public int PharmaciesID { get; set; }
+        public bool IsReceived { get; set; }
+        public Nullable<System.DateTime> ReceivedDate { get; set; }
     
         public virtual Pharmacies Pharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

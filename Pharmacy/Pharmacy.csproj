@@ -257,10 +257,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\SupplyAcceptancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pages\ReturnOrderPage.xaml.cs">
       <DependentUpon>ReturnOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SupplyAcceptancePage.xaml.cs">
+      <DependentUpon>SupplyAcceptancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -96,6 +96,8 @@
           <Property Name="SupplyID" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AcceptedCount" Type="int" />
+          <Property Name="ExpirationDate" Type="date" />
         </EntityType>
         <EntityType Name="ReturnReasons">
           <Key>
@@ -146,6 +148,8 @@
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="StoragesID" Type="int" Nullable="false" />
           <Property Name="PharmaciesID" Type="int" Nullable="false" />
+          <Property Name="IsReceived" Type="bit" Nullable="false" />
+          <Property Name="ReceivedDate" Type="date" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -650,6 +654,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Products" Relationship="Self.FK__ProductsS__Produ__5165187F" FromRole="ProductsSupply" ToRole="Products" />
           <NavigationProperty Name="Supplies" Relationship="Self.FK__ProductsS__Suppl__5070F446" FromRole="ProductsSupply" ToRole="Supplies" />
+          <Property Name="AcceptedCount" Type="Int32" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -702,6 +708,8 @@
           <NavigationProperty Name="ProductsSupply" Relationship="Self.FK__ProductsS__Suppl__5070F446" FromRole="Supplies" ToRole="ProductsSupply" />
           <NavigationProperty Name="Storages" Relationship="Self.FK__Supplies__Storag__4CA06362" FromRole="Supplies" ToRole="Storages" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Supplies__UserID__4F7CD00D" FromRole="Supplies" ToRole="Users" />
+          <Property Name="IsReceived" Type="Boolean" Nullable="false" />
+          <Property Name="ReceivedDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1187,6 +1195,8 @@
           <EntitySetMapping Name="ProductsSupply">
             <EntityTypeMapping TypeName="PharmacyModel.ProductsSupply">
               <MappingFragment StoreEntitySet="ProductsSupply">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="AcceptedCount" ColumnName="AcceptedCount" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
@@ -1233,6 +1243,8 @@
           <EntitySetMapping Name="Supplies">
             <EntityTypeMapping TypeName="PharmacyModel.Supplies">
               <MappingFragment StoreEntitySet="Supplies">
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="IsReceived" ColumnName="IsReceived" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

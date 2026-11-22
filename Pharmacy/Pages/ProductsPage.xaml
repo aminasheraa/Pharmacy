@@ -18,7 +18,9 @@
         <StackPanel Grid.Row="0"  Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <TextBlock Text="Наличие в моей аптеке"  Style="{StaticResource HeaderText}" VerticalAlignment="Center" Margin="10"/>
             <Button x:Name="LogOutBtn" Content="Выход" Background="#CD5C5C" Width="120" Height="30" Click="LogOutBtn_Click"/>
-            <Button x:Name="OnlineOrderBtn" Content="Интернет-заказы" Margin="10" Height="30" Click="OnlineOrderBtn_Click"/>
+            <Button x:Name="OnlineOrderBtn" Content="Интернет-заказы" Margin="10" Width="150" Height="30" Click="OnlineOrderBtn_Click"/>
+            <Button x:Name="SupplyBtn" Content="Приём поставки" Margin="10" Width="150" Height="30" Click="SupplyBtn_Click"/>
+
 
         </StackPanel>
 

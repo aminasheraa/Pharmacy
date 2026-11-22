@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Pharmacy.Model;
 using System;
 using System.Collections.Generic;
@@ -70,8 +69,7 @@ namespace Pharmacy.Pages
 
             ProductsDG.ItemsSource = products;
 
-            bool alreadyReturned = Core.Context.OnlineOrderReturns
-                .Any(r => r.OnlineOrderID == orderId);
+            bool alreadyReturned = Core.Context.OnlineOrderReturns.Any(r => r.OnlineOrderID == orderId);
 
             if (alreadyReturned)
             {
@@ -111,29 +109,27 @@ namespace Pharmacy.Pages
                 return;
             }
 
-            try
+
+            OnlineOrderReturns newReturn = new OnlineOrderReturns
             {
-                OnlineOrderReturns newReturn = new OnlineOrderReturns
-                {
-                    OnlineOrderID = orderId,
-                    UserID = Core.CurrentUser.ID,
-                    ReturnDate = DateTime.Today,
-                    ReasonID = (int)ReasonCB.SelectedValue,
-                    Comment = CommentTB.Text.Trim()
-                };
+                OnlineOrderID = orderId,
+                UserID = Core.CurrentUser.ID,
+                ReturnDate = DateTime.Today,
+                ReasonID = (int)ReasonCB.SelectedValue,
+                Comment = CommentTB.Text.Trim()
+            };
 
-                Core.Context.OnlineOrderReturns.Add(newReturn);
+            Core.Context.OnlineOrderReturns.Add(newReturn);
 
-                Core.Context.SaveChanges();
+            currentOrder.StatusID = 6;
 
-                MessageBox.Show("Возврат успешно оформлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                SaveReturnBtn.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Ошибка при оформлении возврата: " + ex.Message);
-            }
+            Core.Context.SaveChanges();
+
+            StatusTB.Text = "Возвращён";
+
+            MessageBox.Show("Возврат успешно оформлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            SaveReturnBtn.IsEnabled = false;
+
         }
 
         private void GenerateDocumentBtn_Click(object sender, RoutedEventArgs e)

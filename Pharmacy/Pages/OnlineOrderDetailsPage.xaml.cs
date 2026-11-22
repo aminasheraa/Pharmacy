@@ -84,5 +84,15 @@ namespace Pharmacy.Pages
 
             NavigationService.Navigate(new ReturnOrderPage(orderId, pharmacyId));
         }
+
+        private void GiveBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            Core.Context.OnlineOrder.Where(o => o.StatusID == 5);
+
+            Core.Context.SaveChanges();
+
+            StatusTB.Text += "Выдан";
+        }
     }
 }
